@@ -6,6 +6,7 @@ import { Environment } from './config';
 import { OctokitModule } from 'nestjs-octokit';
 import { CommitsModule } from './commits/commits.module';
 import { GithubModule } from './github/github.module';
+import { ReposModule } from './repos/repos.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { GithubModule } from './github/github.module';
     }),
     CommitsModule,
     GithubModule,
+    ReposModule,
   ],
   controllers: [AppController],
   providers: [AppService],

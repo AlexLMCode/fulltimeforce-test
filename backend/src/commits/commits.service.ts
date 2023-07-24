@@ -6,10 +6,10 @@ import { Interfaces } from '../common/interfaces';
 export class CommitsService {
   constructor(private githubService: GithubService) {}
 
-  async getCommits() {
+  async getCommits(page:number = 1, perPage: number = 30) {
     try {
       const response: Interfaces.FullCommitStructure[] =
-        await this.githubService.getCommitsFromRepo();
+        await this.githubService.getCommitsFromRepo(page, perPage);
 
       let mappedCommits: Interfaces.CustomCommit[] = [];
 
@@ -37,7 +37,7 @@ export class CommitsService {
         );
       }
 
-      return mappedCommits;
+      return {data:mappedCommits, count: mappedCommits.length};
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
