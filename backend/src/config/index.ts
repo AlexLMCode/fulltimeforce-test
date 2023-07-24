@@ -1,5 +1,6 @@
-import { IsEnum, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
+import { IsDefined, IsEnum, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
+import { Logger } from '@nestjs/common';
 
 export namespace Environment {
   enum EnvironmentEnum {
@@ -13,10 +14,20 @@ export namespace Environment {
     NODE_ENV: EnvironmentEnum;
 
     @IsNumber()
+    @IsDefined()
     PORT: number;
 
     @IsString()
+    @IsDefined()
     OCTOKIT_TOKEN: string
+
+    @IsString()
+    @IsDefined()
+    OWNER_NAME: string;
+
+    @IsString()
+    @IsDefined()
+    REPOSITORY_NAME: string;
   }
 
   export class EnvValidation {
@@ -29,7 +40,11 @@ export namespace Environment {
       });
 
       if (errors.length > 0) {
-        throw new Error(errors.toString());
+        Logger.error(`Environment Variables Validation`);
+         for (const error of errors) {
+            Logger.error(`${error.property} needs to be defined`);
+         }
+        //  throw new Error(errors.toString());
       }
       return validatedConfig;
     }
