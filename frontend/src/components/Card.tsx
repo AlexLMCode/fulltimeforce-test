@@ -25,9 +25,9 @@ const Card = ({ date, commitHash, commitTitle, commitUser, filesCommited }: Card
             <p className="text-white font-medium">{commitHash}</p>
           </div>
         </div>
-        <div id="commit-title-files-container" className="flex flex-col">
-          <div id="commit-title" className="text-white w-full mb-1 font-medium">
-            {commitTitle}
+        <div id="commit-title-files-container" className="flex flex-col overflow-hidden">
+          <div id="commit-title" className="text-white  mb-1 font-medium">
+            <p>{commitTitle}</p>
           </div>
           <div id="commit-files-commited" className="flex items-center">
             <img src={filesimg} alt="images-file-logo" className='mr-3' />

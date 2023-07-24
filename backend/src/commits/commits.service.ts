@@ -16,6 +16,7 @@ export class CommitsService {
       if (response.length > 0) {
         mappedCommits = await Promise.all(
           response.map(async (commit) => {
+            console.log(commit)
             const customCommit: Interfaces.CustomCommit = {
               commitHash: commit.sha,
               commitTitle: commit.commit.message,

@@ -27,9 +27,9 @@ export const useRepository = () => {
 
     async function getRepoInfo() {
         try {
-            setLoading(true);
-            const repoInfo = await getRepositoryData<RepositoryInfo>();
-            setRepositoryInfo(repoInfo);
+            // setLoading(true);
+            // const repoInfo = await getRepositoryData<RepositoryInfo>();
+            // setRepositoryInfo(repoInfo);
 
             const repoCommits = await getRepositoryCommits<Commit>();
             setCommits(repoCommits);
@@ -51,10 +51,10 @@ export const useRepository = () => {
 
 function getRepositoryData<RepositoryInfo>() {
 
-    return fetch("").then(response => response.json()).then((data)=> data as RepositoryInfo)
+    return fetch("http://localhost:3000/repository").then(response => response.json()).then((data)=> data as RepositoryInfo)
 }
 
 
 function getRepositoryCommits<Commit>() {
-    return fetch("").then(response=>response.json()).then((data)=> data as Commit[])
+    return fetch("http://localhost:3000/commits").then(response=>response.json()).then((data)=> data as Commit[])
 }

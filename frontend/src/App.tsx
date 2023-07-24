@@ -3,7 +3,7 @@ import { LoadingIndicator } from "./components/LoadingIndicator";
 import { useRepository } from "./hooks/useRepository";
 
 function App() {
-  const {repositoryInfo, commits, error, loading} = useRepository();
+  const {commits, error, loading, repositoryInfo} = useRepository();
 
   if (error) {
     return <>
@@ -12,7 +12,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
       {
         loading ? (<LoadingIndicator />) : (<main className="w-full p-8 md:p-16">
           <section>
@@ -40,35 +40,13 @@ function App() {
             <p className="font-medium">Commits (total ${repositoryInfo?.totalCommits}): </p>
           </section>
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
-            {/* Commit list (Cards) */}
             {
               commits?.map((commit)=>(
-                <Card commitHash={commit.commitHash} commitTitle={commit.commitTitle} commitUser={
+                <Card commitHash={commit.commitHash.slice(0,7)} commitTitle={commit.commitTitle} commitUser={
                   { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: commit.commitUser.username }
-                } date={commit.date} filesCommited={commit.filesCommited} />
+                } date={commit.date} filesCommited={commit.filesCommited} key={commit.commitHash}/>
               ))
             }
-            <Card commitHash="60fffa54" commitTitle="Add the social media plugin on iOS app" commitUser={
-              { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: "AlexLm" }
-            } date="7/23/23" filesCommited={3} />
-            <Card commitHash="60fffa54" commitTitle="Add the social media plugin on iOS app" commitUser={
-              { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: "AlexLm" }
-            } date="7/23/23" filesCommited={3} />
-            <Card commitHash="60fffa54" commitTitle="Add the social media plugin on iOS app" commitUser={
-              { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: "AlexLm" }
-            } date="7/23/23" filesCommited={3} />
-            <Card commitHash="60fffa54" commitTitle="Add the social media plugin on iOS app" commitUser={
-              { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: "AlexLm" }
-            } date="7/23/23" filesCommited={3} />
-            <Card commitHash="60fffa54" commitTitle="Add the social media plugin on iOS app" commitUser={
-              { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: "AlexLm" }
-            } date="7/23/23" filesCommited={3} />
-            <Card commitHash="60fffa54" commitTitle="Add the social media plugin on iOS app" commitUser={
-              { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: "AlexLm" }
-            } date="7/23/23" filesCommited={3} />
-            <Card commitHash="60fffa54" commitTitle="Add the social media plugin on iOS app" commitUser={
-              { userImageUrl: "https://avatars.githubusercontent.com/u/55332181?v=4", username: "AlexLm" }
-            } date="7/23/23" filesCommited={3} />
           </section>
         </main>)
       }
