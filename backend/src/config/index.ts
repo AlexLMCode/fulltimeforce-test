@@ -16,7 +16,7 @@ export namespace Environment {
   }
 
   export class EnvValidation {
-    validate(config: Record<string, unknown>) {
+    static validate(config: Record<string, unknown>) {
       const validatedConfig = plainToInstance(EnvironmentVariables, config, {
         enableImplicitConversion: true,
       });
