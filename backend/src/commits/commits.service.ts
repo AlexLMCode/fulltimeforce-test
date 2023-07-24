@@ -17,17 +17,19 @@ export class CommitsService {
         mappedCommits = await Promise.all(
           response.map(async (commit) => {
             const customCommit: Interfaces.CustomCommit = {
-              sha: commit.sha,
-              message: commit.commit.message,
-              username: commit.author.login,
+              commitHash: commit.sha,
+              commitTitle: commit.commit.message,
+              commitUser: {
+                username: commit.author.login,
+                userImageUrl:  commit.committer.avatar_url
+              },
               date: commit.commit.committer.date,
-              avatar: commit.committer.avatar_url,
-              files: 0,
+              filesCommited: 0,
             };
 
-            const { files } = await this.githubService.getCommitByRef(customCommit.sha);
+            const { files } = await this.githubService.getCommitByRef(customCommit.commitHash);
 
-            customCommit.files = files.length;
+            customCommit.filesCommited = files.length;
 
             return customCommit;
           }),

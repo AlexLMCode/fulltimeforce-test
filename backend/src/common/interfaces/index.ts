@@ -68,12 +68,16 @@ export namespace Interfaces {
     parents: ParentCommit[];
   }
 
-  export interface CustomCommit {
-    sha: string;
-    message: string;
+  interface CustomCommitUser {
     username: string;
+    userImageUrl: string;
+  }
+
+  export interface CustomCommit {
     date: string;
-    avatar: string;
-    files: number
+    commitHash: string;
+    commitTitle: string;
+    commitUser: CustomCommitUser;
+    filesCommited: number;
   }
 }
