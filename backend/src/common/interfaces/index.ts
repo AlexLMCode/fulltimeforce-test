@@ -80,4 +80,12 @@ export namespace Interfaces {
     commitUser: CustomCommitUser;
     filesCommited: number;
   }
+
+  export interface RepositoryInfo {
+    createdAt: string;
+    totalCommits: number;
+    repositoryName: string;
+    owner: string;
+    description: string;
+}
 }
