@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Environment } from './config';
 import { OctokitModule } from 'nestjs-octokit';
+import { CommitsModule } from './commits/commits.module';
+import { GithubModule } from './github/github.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { OctokitModule } from 'nestjs-octokit';
         } 
       }
     }),
+    CommitsModule,
+    GithubModule,
   ],
   controllers: [AppController],
   providers: [AppService],
