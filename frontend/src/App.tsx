@@ -1,8 +1,9 @@
-import Card from "./components/Card"
-import { LoadingIndicator } from "./components/LoadingIndicator"
+import Card from "./components/Card";
+import { useRepository } from "./hooks/useRepository";
 
 function App() {
-
+  const [repositoryInfo,commits] = useRepository();
+  
   return (
 
     <main className="w-full p-8 md:p-16">
@@ -15,8 +16,6 @@ function App() {
           <p className="font-medium">Created at:</p>
           <span>19 julio del 2023</span>
         </section>
-
-
 
         <section>
           <p className="font-medium">Owner:</p>

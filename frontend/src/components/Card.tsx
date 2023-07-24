@@ -9,9 +9,12 @@ interface CardProps {
   filesCommited: number
 }
 import filesimg from '../assets/document-icon.svg'
+
+const colors = ['purple', 'coral', 'black', 'orange', 'darkgreen']
+
 const Card = ({ date, commitHash, commitTitle, commitUser, filesCommited }: CardProps) => {
   return (
-    <article className="p-4  bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg max-w-sm">
+    <article className="p-4  rounded-lg max-w-sm" style={{backgroundColor:`${colors[Math.floor(Math.random() * 5)]}`}}>
       <div className='flex  max-w-sm flex-col gap-3'>
 
         <div id="commit-date-hash-container" className="flex justify-between w-full">
