@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { CommitsService } from './commits.service';
 
 @Controller('commits')
@@ -7,7 +7,7 @@ export class CommitsController {
 
     @HttpCode(HttpStatus.OK)
     @Get()
-    async getCommits() {
-        return await this.commitsService.getCommits()
+    async getCommits(@Query('page') page: number, @Query('perPage') perPage: number) {
+        return await this.commitsService.getCommits(isNaN(page) ? 1 : page, isNaN(perPage) ? 30 : perPage);
     }
 }
