@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, validateSync } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
 export namespace Environment {
@@ -9,10 +9,14 @@ export namespace Environment {
 
   class EnvironmentVariables {
     @IsEnum(EnvironmentEnum)
+    @IsOptional()
     NODE_ENV: EnvironmentEnum;
 
     @IsNumber()
     PORT: number;
+
+    @IsString()
+    OCTOKIT_TOKEN: string
   }
 
   export class EnvValidation {
