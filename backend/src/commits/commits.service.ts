@@ -1,12 +1,14 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { GithubService } from 'src/github/github.service';
 import { Interfaces } from '../common/interfaces';
+import * as moment from 'moment';
+import { DateFormatterService } from 'src/date-formatter/date-formatter.service';
 
 @Injectable()
 export class CommitsService {
-  constructor(private githubService: GithubService) {}
+  constructor(private githubService: GithubService, private dateFormatterService: DateFormatterService) {}
 
-  async getCommits(page:number = 1, perPage: number = 30) {
+  async getCommits(page: number = 1, perPage: number = 30) {
     try {
       const response: Interfaces.FullCommitStructure[] =
         await this.githubService.getCommitsFromRepo(page, perPage);
@@ -16,19 +18,20 @@ export class CommitsService {
       if (response.length > 0) {
         mappedCommits = await Promise.all(
           response.map(async (commit) => {
-            console.log(commit)
             const customCommit: Interfaces.CustomCommit = {
               commitHash: commit.sha,
               commitTitle: commit.commit.message,
               commitUser: {
                 username: commit.author.login,
-                userImageUrl:  commit.committer.avatar_url
+                userImageUrl: commit.committer.avatar_url,
               },
-              date: commit.commit.committer.date,
+              date: this.dateFormatterService.formatDateToCalendarDate(commit.commit.committer.date),
               filesCommited: 0,
             };
 
-            const { files } = await this.githubService.getCommitByRef(customCommit.commitHash);
+            const { files } = await this.githubService.getCommitByRef(
+              customCommit.commitHash,
+            );
 
             customCommit.filesCommited = files.length;
 
@@ -37,7 +40,7 @@ export class CommitsService {
         );
       }
 
-      return {data:mappedCommits, count: mappedCommits.length};
+      return { data: mappedCommits, count: mappedCommits.length };
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }

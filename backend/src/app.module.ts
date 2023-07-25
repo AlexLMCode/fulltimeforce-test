@@ -7,6 +7,7 @@ import { OctokitModule } from 'nestjs-octokit';
 import { CommitsModule } from './commits/commits.module';
 import { GithubModule } from './github/github.module';
 import { ReposModule } from './repos/repos.module';
+import { DateFormatterModule } from './date-formatter/date-formatter.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ReposModule } from './repos/repos.module';
     CommitsModule,
     GithubModule,
     ReposModule,
+    DateFormatterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
