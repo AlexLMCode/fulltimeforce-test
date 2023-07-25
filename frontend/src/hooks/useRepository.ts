@@ -11,6 +11,11 @@ interface Commit {
     filesCommited: number
 }
 
+interface CommitResponse {
+    data: Commit[];
+    count: number
+}
+
 interface RepositoryInfo {
     createdAt: string;
     totalCommits: number;
@@ -21,17 +26,29 @@ interface RepositoryInfo {
 
 export const useRepository = () => {
     const [repositoryInfo, setRepositoryInfo] = useState<RepositoryInfo | null>(null);
-    const [commits, setCommits] = useState<Commit[] | null>(null);
+    const [commits, setCommits] = useState<CommitResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<any>(null)
+    const [currPage, setCurrPage] = useState(1);
+    const [commitsPerPage, setCommitsPerPage] = useState(10);
+    const indexOfLastCommit = currPage * commitsPerPage;
+    const indexOfFirstCommit = indexOfLastCommit - commitsPerPage;
+    const currentCommits = commits?.data.slice(indexOfFirstCommit, indexOfLastCommit);
 
-    async function getRepoInfo() {
+    const paginate = (number: number) => {
+        setCurrPage(number)
+    }
+
+    async function getRepoInfo(page:number) {
         try {
-            // setLoading(true);
-            // const repoInfo = await getRepositoryData<RepositoryInfo>();
-            // setRepositoryInfo(repoInfo);
+            setLoading(true);
+            const repoInfo = await getRepositoryData<RepositoryInfo>();
+            console.log("repoinfo", repoInfo)
+            setRepositoryInfo(repoInfo);
 
-            const repoCommits = await getRepositoryCommits<Commit>();
+            const repoCommits = await getRepositoryCommits<CommitResponse>(page);
+            console.log("repocommits", repoCommits)
+
             setCommits(repoCommits);
         } catch (error) {
             setError(error);
@@ -41,20 +58,19 @@ export const useRepository = () => {
     }
 
     useEffect(() => {
+        getRepoInfo(currPage)
+    }, [currPage])
 
-        getRepoInfo()
-    }, [])
 
-
-    return {repositoryInfo, commits, loading, error}
+    return { repositoryInfo, commits, loading, error, paginate, commitsPerPage,currentCommits }
 }
 
 function getRepositoryData<RepositoryInfo>() {
 
-    return fetch("http://localhost:3000/repository").then(response => response.json()).then((data)=> data as RepositoryInfo)
+    return fetch("http://localhost:3000/repos/info").then(response => response.json()).then((data) => data as RepositoryInfo)
 }
 
 
-function getRepositoryCommits<Commit>() {
-    return fetch("http://localhost:3000/commits").then(response=>response.json()).then((data)=> data as Commit[])
+function getRepositoryCommits<CommitResponse>(page:number) {
+    return fetch(`http://localhost:3000/commits?perPage=60`).then(response => response.json()).then((data) => data as CommitResponse)
 }
