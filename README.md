@@ -63,6 +63,28 @@ Run frontend project
 ```
 
 ### You MUST run both projects (backend, frontend) at the same time on different terminals in order to get the project up and running
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file inside the backend folder
+
+`OCTOKIT_TOKEN`
+
+`PORT`
+
+`NODE_ENV`
+
+`OWNER_NAME`
+
+`REPOSITORY_NAME`
+
+`API_NAME`
+
+`API_DESCRIPTION`
+
+`API_VERSION`
+
 ## API Reference
 
 #### Get repository commits
@@ -76,7 +98,7 @@ Run frontend project
 | `perPage` | `number` | commits per page |
 | `page` | `number` | page number |
 
-#### Get item
+#### Get repository info
 
 ```http
   GET /repos/info
@@ -85,6 +107,4 @@ Run frontend project
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | ``      | `` |  |
-
-
 
