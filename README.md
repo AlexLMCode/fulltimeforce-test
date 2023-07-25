@@ -24,6 +24,24 @@ Go to the backend project directory
   cd backend
 ```
 
+Create .env file in the backend root folder.
+
+On Windows, use Command Prompt to generate the file
+
+```bash
+type nul > .env
+```
+
+On Linux and MacOS
+
+```bash
+touch .env
+```
+
+fill the .env with the required information
+
+Use the .env.example as an example to add the required enviroment variables 
+
 Install dependencies
 
 ```bash
