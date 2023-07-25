@@ -28,6 +28,18 @@ export namespace Environment {
     @IsString()
     @IsDefined()
     REPOSITORY_NAME: string;
+
+    @IsString()
+    @IsDefined()
+    API_NAME: string;
+
+    @IsString()
+    @IsDefined()
+    API_DESCRIPTION: string;
+
+    @IsString()
+    @IsDefined()
+    API_VERSION: string;
   }
 
   export class EnvValidation {
@@ -44,7 +56,7 @@ export namespace Environment {
          for (const error of errors) {
             Logger.error(`${error.property} needs to be defined`);
          }
-        //  throw new Error(errors.toString());
+         throw new Error(errors.toString());
       }
       return validatedConfig;
     }
