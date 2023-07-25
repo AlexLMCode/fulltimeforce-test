@@ -1,10 +1,14 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Interfaces } from 'src/common/interfaces';
+import { DateFormatterService } from 'src/date-formatter/date-formatter.service';
 import { GithubService } from 'src/github/github.service';
 
 @Injectable()
 export class ReposService {
-  constructor(private githubService: GithubService) {}
+  constructor(
+    private githubService: GithubService,
+    private dateFormatterService: DateFormatterService,
+  ) {}
 
   async getRepoInfo(): Promise<Interfaces.RepositoryInfo> {
     try {
@@ -14,7 +18,7 @@ export class ReposService {
 
       let page: number = 1,
         perPage: number = 50;
-        
+
       let commits: Awaited<
         ReturnType<typeof this.githubService.getCommitsFromRepo>
       > = await this.githubService.getCommitsFromRepo(page, perPage);
@@ -30,18 +34,18 @@ export class ReposService {
         totalCommits += commits.length;
         page++;
         commits = await this.githubService.getCommitsFromRepo(page, perPage);
-        if(commits.length == 0) {
-            hasData = false;
+        if (commits.length == 0) {
+          hasData = false;
         }
       }
 
       const repoInfo: Interfaces.RepositoryInfo = {
-        createdAt: repo.created_at,
+        createdAt: this.dateFormatterService.formatDateToCalendarDate(repo.created_at),
         repositoryName: repo.name,
         owner: repo.owner.login,
         description: repo.description,
-        totalCommits
-      }
+        totalCommits,
+      };
 
       return repoInfo;
     } catch (error) {
