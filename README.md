@@ -61,3 +61,30 @@ Run frontend project
 ```bash
   npm run dev
 ```
+
+### You MUST run both projects (backend, frontend) at the same time on different terminals in order to get the project up and running
+## API Reference
+
+#### Get repository commits
+
+```http
+  GET /commits?perPage=60
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `perPage` | `number` | commits per page |
+| `page` | `number` | page number |
+
+#### Get item
+
+```http
+  GET /repos/info
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| ``      | `` |  |
+
+
+
