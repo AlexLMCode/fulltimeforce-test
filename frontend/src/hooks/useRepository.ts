@@ -72,5 +72,5 @@ function getRepositoryData<RepositoryInfo>() {
 
 
 function getRepositoryCommits<CommitResponse>(page:number) {
-    return fetch(`http://localhost:3000/commits?perPage=60`).then(response => response.json()).then((data) => data as CommitResponse)
+    return fetch(`http://localhost:3000/commits?perPage=100`).then(response => response.json()).then((data) => data as CommitResponse)
 }

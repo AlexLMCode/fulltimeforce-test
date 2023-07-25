@@ -108,3 +108,13 @@ To run this project, you will need to add the following environment variables to
 | :-------- | :------- | :-------------------------------- |
 | ``      | `` |  |
 
+#### Get UI endpoints
+
+```http
+  GET /swagger
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| ``      | `` |  |
+
